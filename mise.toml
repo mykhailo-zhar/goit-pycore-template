@@ -18,18 +18,14 @@ uv = "latest"
 [tasks.install-dependencies]
 description = "Install dependencies"
 alias = "id"
-run = "uv pip install -r requirements.txt"
+run = "uv add -r requirements.txt"
 
 [tasks.install]
 description = "Install the application"
-run = "uv pip install {{ usage.package }}"
+run = "uv add {{ usage.package }} && uv pip freeze > requirements.txt"
 usage = '''
 arg "<package>" help="Package to install"
 '''
-
-[tasks.run]
-description = "Run the application"
-run = "python app.py"
 
 [tasks.test]
 description = "Run tests"
