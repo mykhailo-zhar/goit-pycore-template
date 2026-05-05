@@ -13,18 +13,18 @@ _.python.venv = { path = ".venv" }
 python.uv_venv_auto = "create|source"
 
 [tools]
-python = "{{ get_env(name='PYTHON_VERSION', default='3.11') }}"
+python = "{{ get_env(name='PYTHON_VERSION', default='3.12') }}"
 ruff = "latest"
 uv = "latest"
 
 [tasks.install-dependencies]
 description = "Install dependencies"
 alias = "id"
-run = "uv add -r requirements.txt"
+run = "uv sync"
 
 [tasks.install]
 description = "Install the application"
-run = "uv add {{ usage.package }} && uv pip freeze > requirements.txt"
+run = "uv add {{ usage.package }}"
 usage = '''
 arg "<package>" help="Package to install"
 '''
@@ -37,10 +37,6 @@ run = "pytest tests/"
 description = "Lint the code"
 run = "ruff lint src/"
 
-[tasks.update-requirements]
-description = "Update the requirements"
-run = "uv pip freeze > requirements.txt"
-
 [tasks.info]
 description = "Print project information"
 run = '''
@@ -50,10 +46,10 @@ echo "Virtual Environment: $VIRTUAL_ENV"
 
 [tasks.generate-docs]
 alias = "gd"
-description = "Generate documentation"
+description = "Generate reST files for the project "
 run = "sphinx-apidoc -o docs/source src/ && sphinx-apidoc -o docs/source tests/"
 
 [tasks.build-docs]
 alias = "bd"
-description = "Build documentation"
+description = "Build HTML documentation from the reST files"
 run = "sphinx-build -b html docs/source docs/build"
