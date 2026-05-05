@@ -22,7 +22,8 @@ extensions = []
 templates_path = ["_templates"]
 exclude_patterns = []
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+_root = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(_root))
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
